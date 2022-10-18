@@ -1,0 +1,148 @@
+<div class="container pt-3">
+  <h1 align="center">Danh Sách Công Việc</h1>
+  <div class="d-flex justify-content-between">
+    <div>
+      <!--      <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 10px" class="btn btn-primary"-->
+      <!--         href="#">Create-->
+      <!--        new Product</a>-->
+    </div>
+<!--    <div class="form-inline">-->
+<!--      <input class="form-control mr-sm-2" type="search" placeholder="Search by name" aria-label="Search"-->
+<!--             #keyOne>-->
+<!--      <input class="form-control mr-sm-2" type="search" placeholder="Search by code" aria-label="Search"-->
+<!--             #keyTwo>-->
+<!--      <input class="form-control mr-sm-2" type="search" placeholder="Search by reason" aria-label="Search"-->
+<!--             #keyThree>-->
+
+<!--      <button class="btn btn-outline-success my-2 my-sm-8" type="submit"-->
+<!--              (click)="searchByName(keyOne.value,keyTwo.value,keyThree.value)">-->
+<!--        <i class="fas fa-search"></i>-->
+<!--      </button>-->
+<!--    </div>-->
+  </div>
+  <table class="table table-striped">
+    <thead class="text-center">
+    <th scope="col">ID</th>
+    <th scope="col">Name</th>
+    <th scope="col">Date</th>
+    <th scope="col">End</th>
+    <th scope="col">Progress (%)</th>
+    <th scope="col">Project</th>
+    <th></th>
+    <th></th>
+
+    </thead>
+    <tbody class="text-center">
+    <tr scope="col" *ngFor="let task of taskList |paginate: { itemsPerPage: 5, currentPage: p}">
+      <td>{{task.id}}</td>
+      <td>{{task.name}}</td>
+      <td>{{task.date}}</td>
+      <td>{{task.end}}</td>
+      <td>{{task.progress}}</td>
+      <td>{{task.project?.name}}</td>
+      <td>
+        <a class="btn btn-warning" routerLink="/edit/{{task.id}}"><i class='fas fa-edit' style='font-size:24px'></i></a>
+      </td>
+      <td>
+        <a class="btn btn-danger" data-toggle="modal" data-target="#modalDelete"
+           (click)="getId(task.id, task.name, task.progress)"><i class="material-icons" style="font-size:24px">delete</i></a>
+      </td>
+<!--    </tr>-->
+    </tbody>
+  </table>
+</div>
+<div align="center">
+  <pagination-controls (pageChange)="p = $event" style="margin-left: 55%"></pagination-controls>
+</div>
+
+
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="modalDeleteCustomerContent">
+        <h6>ID : {{taskId}}</h6>
+        <h6>Name : {{taskName}}</h6>
+        <h6>Progress (%) : {{progress}}</h6>
+        <br><br>
+        <p>Bạn có muốn xóa <span style="color: red">{{taskName}}</span> này không?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="delete()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title" id="exampleModalLabel">Product Detail</h5>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <form [formGroup]="formValue">-->
+<!--          <div class="mb-3">-->
+<!--            <label for="exampleInputName1" class="form-label">Name</label>-->
+<!--            <input type="text" name="name" formControlName="name" class="form-control" id="exampleInputName1"-->
+<!--                   aria-describedby="emailHelp">-->
+<!--          </div>-->
+<!--          <div *ngFor="let validation of validation_messages.name">-->
+<!--            <div class="alert alert-danger"-->
+<!--                 *ngIf="formValue.get('name').hasError(validation.type) && (formValue.get('name').dirty || formValue.get('name').touched)">-->
+<!--              {{validation.message}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="mb-3">-->
+<!--            <label for="exampleInputIdCard1" class="form-label">Price</label>-->
+<!--            <input type="text" formControlName="price" class="form-control" id="exampleInputIdCard1">-->
+<!--          </div>-->
+<!--          <div *ngFor="let validation of validation_messages.price">-->
+<!--            <div class="alert alert-danger"-->
+<!--                 *ngIf="formValue.get('price').hasError(validation.type) && (formValue.get('price').dirty || formValue.get('price').touched)">-->
+<!--              {{validation.message}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="mb-3">-->
+<!--            <label for="exampleInputPhone1" class="form-label">Quantity</label>-->
+<!--            <input type="text" formControlName="quantity" class="form-control" id="exampleInputPhone1">-->
+<!--          </div>-->
+<!--          <div *ngFor="let validation of validation_messages.quantity">-->
+<!--            <div class="alert alert-danger"-->
+<!--                 *ngIf="formValue.get('quantity').hasError(validation.type) && (formValue.get('quantity').dirty || formValue.get('quantity').touched)">-->
+<!--              {{validation.message}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="mb-3">-->
+<!--            <label for="exampleInputEmail1" class="form-label">Color</label>-->
+<!--            <input type="email" formControlName="color" class="form-control" id="exampleInputEmail1">-->
+<!--          </div>-->
+<!--          <div *ngFor="let validation of validation_messages.email">-->
+<!--            <div class="alert alert-danger"-->
+<!--                 *ngIf="formValue.get('color').hasError(validation.type) && (formValue.get('color').dirty || formValue.get('color').touched)">-->
+<!--              {{validation.message}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="mb-3">-->
+<!--            <label for="category">Customer type</label>-->
+<!--            <select-->
+<!--              formControlName="category" class="form-control" id="category">-->
+<!--              <option disabled selected value="">Category</option>-->
+<!--              <option *ngFor="let category of categoryList"-->
+<!--                      [ngValue]="category">{{category.name}}-->
+<!--              </option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--        <button type="button" class="btn btn-primary" (click)="saveProduct()">Add</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
