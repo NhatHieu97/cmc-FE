@@ -14,6 +14,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { DetailTaskComponent } from './task/detail-task/detail-task.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { FooterComponent } from './footer/footer.component';
     UpdateTaskComponent,
     DeleteTaskComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DetailTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { FooterComponent } from './footer/footer.component';
     BrowserModule,
     NgxPaginationModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
