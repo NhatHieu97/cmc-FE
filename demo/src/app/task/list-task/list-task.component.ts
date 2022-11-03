@@ -27,6 +27,9 @@ export class ListTaskComponent implements OnInit {
   doneTask =  [];
   checkTime: boolean = false;
   project : any;
+  labelList: any;
+  labelCreate = [];
+  label: any
 
   constructor(
     private taskService: TaskService,
@@ -54,6 +57,10 @@ export class ListTaskComponent implements OnInit {
     this.taskService.getAll().subscribe(data => {
       this.taskList = data['data']
       console.log(this.taskList);
+    })
+    this.taskService.getAllLabel().subscribe(data => {
+      this.labelList = data
+      console.log(data);
     })
     // this.taskService.getByProjectId(this.taskList.projectId).subscribe(data => {
     //   this.projectList = data['data']
@@ -93,6 +100,7 @@ export class ListTaskComponent implements OnInit {
 
   create() {
     this.checkTime = false;
+    this.formValue.get('label').setValue(this.labelCreate);
     if (this.formValue.invalid) {
       alert('There was an error!');
     } else {
@@ -109,5 +117,19 @@ export class ListTaskComponent implements OnInit {
       let ref = document.getElementById('cancel');
       ref?.click();
     }
+  }
+
+  addLabel(label: any){
+    this.labelCreate = [];
+    var labelArray = document.getElementsByClassName("label");
+    for (var i = 0; i < labelArray.length; i++){
+      if (labelArray[i].checked){
+        this.taskService.finByIdLabel(labelArray[i].value).subscribe(value => {
+          this.labelCreate.push(value)
+        })
+
+      }
+    }
+
   }
 }

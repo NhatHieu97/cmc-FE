@@ -51,4 +51,7 @@ export class TaskService {
   deleteTask(id: number){
     return this.http.delete(this.baseURL + "/task/" + id);
   }
+  getAllLabel(){
+    return this.http.get(this.baseURL + "/label");
+  }
 }

@@ -234,6 +234,12 @@
                 </select>
               </div>
 
+              <div>
+                <ng-container *ngFor="let label of labelList">
+                  <input type="checkbox" value="{{label.id}}" class="label" (click)="addLabel(this)"><span>{{label.name}}</span><br>
+                </ng-container>
+              </div>
+
             </div>
           </div>
 
