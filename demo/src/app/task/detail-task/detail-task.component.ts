@@ -45,15 +45,17 @@ export class DetailTaskComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params.id;
     this.taskService.finById(this.id).subscribe(value => {
       this.task = value['data'];
+      // this.task = this.task.task
       this.project = this.task.project
-      this.formValue.patchValue(this.task);
+      console.log(this.project.id);
+      // this.formValue.patchValue(this.task);
       this.subTask = this.formBuilder.group({
         id: '',
         name: '',
         date: '',
         end: '',
         progress: '',
-        project: '',
+        projectId: '',
       })
       this.subTask.get('project').setValue(this.project.name)
     });
@@ -69,7 +71,7 @@ export class DetailTaskComponent implements OnInit {
 
   create() {
     console.log(this.subTask.value);
-    this.subTask.get('project').setValue(this.project)
+    this.subTask.get('projectId').setValue(this.project.id)
     this.id = this.activatedRoute.snapshot.params.id;
     this.taskService.createSub(this.id, this.subTask.value).subscribe(data => {
         this.taskSub = data;

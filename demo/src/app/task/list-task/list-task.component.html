@@ -37,38 +37,38 @@
             <h3>Main Task</h3>
             <div class="card-body height">
               <div class="task" *ngFor="let task of taskList">
-                <div (click)="getById(task?.id)" class="d-flex justify-content-between">
-                  <div class="font">[{{task.name}}]</div>
+                <div (click)="getById(task.task?.id)" class="d-flex justify-content-between">
+                  <div class="font">[{{task.task.name}}]</div>
                   <div>
-                    <i routerLink="/update/{{task.id}}" class="material-icons" style="color: green">create</i>
+                    <i routerLink="/update/{{task.task.id}}" class="material-icons" style="color: green">create</i>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between" style="padding-top: 5px">
                   <div class="d-flex">
                     <div style="padding-right: 10px">
-                      <i routerLink="/detail/{{task.id}}" class="material-icons">date_range</i>
+                      <i routerLink="/detail/{{task.task.id}}" class="material-icons">date_range</i>
                     </div>
-                    <div>{{task.date}}</div>
+                    <div>{{task.task.date}}</div>
                   </div>
                   <div class="d-flex">
                     <div style="padding-right: 10px">
                       <i class="material-icons">date_range</i>
                     </div>
-                    <div>{{task.end}}</div>
+                    <div>{{task.task.end}}</div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between" style="padding-top: 5px">
-                  <div class="d-flex">
-                    <div><b>Label:</b> {{task.label?.name}}</div>
-                  </div>
-                </div>
-                <div style="padding-top: 5px"><b>Project:</b> {{task.projectId}}</div>
+<!--                <div class="d-flex justify-content-between" style="padding-top: 5px">-->
+<!--                  <div class="d-flex">-->
+<!--                    <div><b>Label:</b> {{task.task.label?.name}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div style="padding-top: 5px"><b>Project:</b> {{task.project.name}}</div>
                 <div class="row" style="padding-top: 5px">
                   <div class="col-8">
                     <span class="pt-5">
                     <div class="progress">
-                      <div class="progress-bar" role="progressbar" [style.width.%]="task.progress"
-                           aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{task.progress}}%</div>
+                      <div class="progress-bar" role="progressbar" [style.width.%]="task.task.progress"
+                           aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{task.task.progress}}%</div>
                     </div>
                     </span>
                   </div>
@@ -91,9 +91,9 @@
             <div class="card-body height">
               <div class="task" *ngFor="let task of doingTask">
                 <div class="d-flex justify-content-between">
-                  <div class="font">[{{task.name}}]</div>
+                  <div class="font">[{{task.task.name}}]</div>
                   <div>
-                    <i routerLink="/update/{{task.id}}" class="material-icons" style="color: green">create</i>
+                    <i routerLink="/update/{{task.task.id}}" class="material-icons" style="color: green">create</i>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between" style="padding-top: 5px">
@@ -101,34 +101,34 @@
                     <div style="padding-right: 10px">
                       <i class="material-icons">date_range</i>
                     </div>
-                    <div>{{task.date}}</div>
+                    <div>{{task.task.date}}</div>
                   </div>
                   <div class="d-flex">
                     <div style="padding-right: 10px">
                       <i class="material-icons">date_range</i>
                     </div>
-                    <div>{{task.end}}</div>
+                    <div>{{task.task.end}}</div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between" style="padding-top: 5px">
-                  <div class="d-flex">
-                    <div><b>Label:</b> {{task.label?.name}}</div>
-                  </div>
-                </div>
+<!--                <div class="d-flex justify-content-between" style="padding-top: 5px">-->
+<!--                  <div class="d-flex">-->
+<!--                    <div><b>Label:</b> {{task.label?.name}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
                 <div style="padding-top: 5px"><b>Project:</b> {{task.project?.name}}</div>
                 <div class="row" style="padding-top: 5px">
                   <div class="col-8">
                     <span class="pt-5">
                     <div class="progress">
-                      <div class="progress-bar" role="progressbar" [style.width.%]="task.progress"
-                           aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{task.progress}}%</div>
+                      <div class="progress-bar" role="progressbar" [style.width.%]="task.task.progress"
+                           aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{task.task.progress}}%</div>
                     </div>
                     </span>
                   </div>
                   <div class="col-4">
                     <div class="d-flex justify-content-between">
                       <div></div>
-                      <i (click)="delete(task.id)" class="material-icons" style="color: red">delete</i>
+                      <i (click)="delete(task.task.id)" class="material-icons" style="color: red">delete</i>
                     </div>
                   </div>
                 </div>
@@ -144,9 +144,9 @@
             <div class="card-body height">
               <div class="task" *ngFor="let task of doneTask">
                 <div class="d-flex justify-content-between">
-                  <div class="font">[{{task.name}}]</div>
+                  <div class="font">[{{task.task.name}}]</div>
                   <div>
-                    <i routerLink="/update/{{task.id}}" class="material-icons" style="color: green">create</i>
+                    <i routerLink="/update/{{task.task.id}}" class="material-icons" style="color: green">create</i>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between" style="padding-top: 5px">
@@ -154,27 +154,27 @@
                     <div style="padding-right: 10px">
                       <i class="material-icons">date_range</i>
                     </div>
-                    <div>{{task.date}}</div>
+                    <div>{{task.task.date}}</div>
                   </div>
                   <div class="d-flex">
                     <div style="padding-right: 10px">
                       <i class="material-icons">date_range</i>
                     </div>
-                    <div>{{task.end}}</div>
+                    <div>{{task.task.end}}</div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between" style="padding-top: 5px">
-                  <div class="d-flex">
-                    <div><b>Label:</b> {{task.label?.name}}</div>
-                  </div>
-                </div>
+<!--                <div class="d-flex justify-content-between" style="padding-top: 5px">-->
+<!--                  <div class="d-flex">-->
+<!--                    <div><b>Label:</b> {{task.label?.name}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
                 <div style="padding-top: 5px"><b>Project:</b> {{task.project?.name}}</div>
                 <div class="row" style="padding-top: 5px">
                   <div class="col-8">
                     <span class="pt-5">
                     <div class="progress">
-                      <div class="progress-bar" role="progressbar" [style.width.%]="task.progress"
-                           aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{task.progress}}%</div>
+                      <div class="progress-bar" role="progressbar" [style.width.%]="task.task.progress"
+                           aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{task.task.progress}}%</div>
                     </div>
                     </span>
                   </div>

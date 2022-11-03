@@ -8,20 +8,19 @@
       <form [formGroup]="formValue">
         <div class="task">
           <div>
-            <input formControlName="name" class="form-control" type="text" placeholder="Name">
+            <b>Name:</b> {{task.task.name}}
           </div>
           <div style="padding-top: 20px">
-            <input formControlName="date" class="form-control" type="text" placeholder="Date">
+            <b>Date:</b> {{task.task.date}}
           </div>
           <div style="padding-top: 20px">
-            <input formControlName="end" class="form-control" type="text" placeholder="End">
+            <b>End:</b> {{task.task.end}}
           </div>
           <div style="padding-top: 20px">
-            <input formControlName="progress" class="form-control" type="text" placeholder="progress">
+            <b>Progress:</b> {{task.task.progress}}
           </div>
           <div style="padding-top: 20px">
-            <div formControlName="project"
-                 class="form-control"  readonly>{{task.project.name}}</div>
+            <b>Project:</b> {{task.project.name}}
           </div>
         </div>
         <div align="center" style="margin-top: 20px">
@@ -60,7 +59,7 @@
                 <input disabled  formControlName="progress" class="form-control" type="text" placeholder="progress">
               </div>
               <div style="padding-top: 10px">
-                <input  formControlName="project" class="form-control" type="text" >
+                <input  value="{{project.name}}" class="form-control" type="text" >
               </div>
 
             </div>

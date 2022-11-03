@@ -12,7 +12,6 @@ export class TaskService {
   ) { }
 
   private baseURL = 'http://localhost:8080/api/v1';
-  private baseURLProject = 'http://localhost:8081/api/v1';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -29,7 +28,7 @@ export class TaskService {
   }
 
   finById(id: number){
-    return this.http.get(this.baseURL + "/task/" + id);
+    return this.http.get(this.baseURL + "/task/project/" + id);
   }
 
   save(taskDto) {
@@ -44,9 +43,6 @@ export class TaskService {
     return this.http.get(this.baseURL + "/projects");
   }
 
-  getByProjectId(id: number) {
-    return this.http.get(this.baseURLProject + "/projects/" + id);
-  }
 
   createSub(id,taskDto) {
     return this.http.post(this.baseURL + '/task/createSub/'  + id, taskDto);

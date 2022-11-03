@@ -53,8 +53,7 @@ export class ListTaskComponent implements OnInit {
   init(){
     this.taskService.getAll().subscribe(data => {
       this.taskList = data['data']
-      this.project = this.taskList?.projectId
-      console.log(this.project);
+      console.log(this.taskList);
     })
     // this.taskService.getByProjectId(this.taskList.projectId).subscribe(data => {
     //   this.projectList = data['data']
@@ -62,11 +61,13 @@ export class ListTaskComponent implements OnInit {
   }
 
   getById(id: number) {
+    console.log(id);
     this.doneTask = [];
     this.doingTask = [];
 
     this.taskService.getById(id).subscribe(value => {
       this.taskSub = value['data']
+      console.log(this.taskSub);
       console.log(this.taskSub)
       for (let i = 0; i < this.taskSub.length; i++){
         if (this.taskSub[i].progress != 100){
