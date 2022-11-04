@@ -29,7 +29,7 @@ export class ListTaskComponent implements OnInit {
   project : any;
   labelList: any;
   labelCreate = [];
-  label: any
+  labels: any
 
   constructor(
     private taskService: TaskService,
@@ -48,19 +48,22 @@ export class ListTaskComponent implements OnInit {
       name: ['', Validators.required],
       date: ['', [Validators.required]],
       end: ['', [Validators.required]],
-      project: ['', [Validators.required]],
+      projectId: ['', [Validators.required]],
+      labels: ['', [Validators.required]],
     })
 
   }
 
   init(){
+    this.taskService.getAllProject().subscribe(data => {
+      this.projectList = data['data']
+    })
     this.taskService.getAll().subscribe(data => {
       this.taskList = data['data']
       console.log(this.taskList);
     })
     this.taskService.getAllLabel().subscribe(data => {
       this.labelList = data
-      console.log(data);
     })
     // this.taskService.getByProjectId(this.taskList.projectId).subscribe(data => {
     //   this.projectList = data['data']
@@ -74,8 +77,6 @@ export class ListTaskComponent implements OnInit {
 
     this.taskService.getById(id).subscribe(value => {
       this.taskSub = value['data']
-      console.log(this.taskSub);
-      console.log(this.taskSub)
       for (let i = 0; i < this.taskSub.length; i++){
         if (this.taskSub[i].progress != 100){
           this.doingTask.push(this.taskSub[i])
@@ -99,8 +100,11 @@ export class ListTaskComponent implements OnInit {
   }
 
   create() {
+    console.log(this.formValue.value);
     this.checkTime = false;
-    this.formValue.get('label').setValue(this.labelCreate);
+    this.formValue.get('labels').setValue(this.labelCreate);
+    console.log(567);
+    console.log(this.formValue.value);
     if (this.formValue.invalid) {
       alert('There was an error!');
     } else {
@@ -117,19 +121,11 @@ export class ListTaskComponent implements OnInit {
       let ref = document.getElementById('cancel');
       ref?.click();
     }
+    this.labelCreate = [];
   }
 
   addLabel(label: any){
-    this.labelCreate = [];
-    var labelArray = document.getElementsByClassName("label");
-    for (var i = 0; i < labelArray.length; i++){
-      if (labelArray[i].checked){
-        this.taskService.finByIdLabel(labelArray[i].value).subscribe(value => {
-          this.labelCreate.push(value)
-        })
-
-      }
-    }
-
+    this.labelCreate.push(label.value)
+    label.value = '';
   }
 }

@@ -12,6 +12,7 @@ export class TaskService {
   ) { }
 
   private baseURL = 'http://localhost:8080/api/v1';
+  private baseURLPro = 'http://localhost:8081/api/v1';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -40,7 +41,7 @@ export class TaskService {
   }
 
   getAllProject(){
-    return this.http.get(this.baseURL + "/projects");
+    return this.http.get(this.baseURLPro + "/projects");
   }
 
 
@@ -53,5 +54,10 @@ export class TaskService {
   }
   getAllLabel(){
     return this.http.get(this.baseURL + "/label");
+  }
+
+  findListIdLabel(id: number){
+    console.log(id);
+    return this.http.get(this.baseURL + "/label/idLabel/" + id);
   }
 }

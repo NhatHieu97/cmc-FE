@@ -23,6 +23,12 @@ export class DetailTaskComponent implements OnInit {
   checkStart: boolean = false;
   checkEnd: boolean = false;
   project: any
+  labelCreate = [];
+  parentLabel: Object = [];
+  labelList: any;
+  projectName: any;
+
+
 
   constructor(
     private taskService: TaskService,
@@ -34,21 +40,19 @@ export class DetailTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formValue = this.formBuilder.group({
-      id: '',
-      name: '',
-      date: '',
-      end: '',
-      progress: '',
-      project: '',
-    });
     this.id = this.activatedRoute.snapshot.params.id;
     this.taskService.finById(this.id).subscribe(value => {
       this.task = value['data'];
+      console.log(this.task);
       // this.task = this.task.task
       this.project = this.task.project
-      console.log(this.project.id);
+      console.log(this.project);
       // this.formValue.patchValue(this.task);
+      this.taskService.findListIdLabel(this.id).subscribe(data=> {
+        this.parentLabel = data;
+        console.log(123)
+        console.log(this.parentLabel)
+      })
       this.subTask = this.formBuilder.group({
         id: '',
         name: '',
@@ -56,8 +60,9 @@ export class DetailTaskComponent implements OnInit {
         end: '',
         progress: '',
         projectId: '',
+        labels: '',
       })
-      this.subTask.get('project').setValue(this.project.name)
+      // this.subTask.get('project').setValue(this.project.name)
     });
     {
       this.taskService.getAllProject().subscribe(data => {
@@ -71,7 +76,15 @@ export class DetailTaskComponent implements OnInit {
 
   create() {
     console.log(this.subTask.value);
+    console.log(this.labelCreate)
     this.subTask.get('projectId').setValue(this.project.id)
+    for(let i = 0; i < this.parentLabel.length; i++){
+      this.labelCreate.push(this.parentLabel[i].name)
+      this.subTask.get('labels').setValue(this.labelCreate);
+    }
+    console.log(this.subTask.value);
+    console.log(this.project.id);
+
     this.id = this.activatedRoute.snapshot.params.id;
     this.taskService.createSub(this.id, this.subTask.value).subscribe(data => {
         this.taskSub = data;
@@ -91,4 +104,12 @@ export class DetailTaskComponent implements OnInit {
       }
     );
   }
+
+
+
+  addLabel(label : any){
+    this.labelCreate.push(label.value)
+    label.value = '';
+  }
+
 }

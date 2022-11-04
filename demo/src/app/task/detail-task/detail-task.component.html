@@ -56,10 +56,28 @@
                 <p *ngIf="checkEnd" style="color: red">End time cannot be greater than the end time of main task</p>
               </div>
               <div style="padding-top: 10px">
-                <input disabled  formControlName="progress" class="form-control" type="text" placeholder="progress">
+                <input disabled formControlName="progress" class="form-control" type="text" placeholder="progress">
               </div>
               <div style="padding-top: 10px">
-                <input  value="{{project.name}}" class="form-control" type="text" >
+                <input value="{{project.name}}" class="form-control" type="text">
+              </div>
+              <div style="padding-top: 10px">
+                <input #input type="text" placeholder="Input label to add" class="form-control label mr-2">
+                <button style="width: 100px; margin-top: 10px" class="form-control" (click)="addLabel(input)"> Add label</button>
+                <br>
+                <ng-container *ngFor="let label of parentLabel">
+                  <span>{{label.name}}</span><br>
+                </ng-container>
+                <div *ngFor="let label of labelCreate">
+                  {{label}}
+                </div>
+                <!--                <div>-->
+                <!--                  <div for>-->
+                <!--                    <input  type="text"> <span>X</span>-->
+                <!--                  </div>-->
+                <!--                  <INPUT>-->
+                <!--                  <ADD></ADD>-->
+                <!--                </div>-->
               </div>
 
             </div>
@@ -68,7 +86,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary"  (click)="create()">Save</button>
+          <button type="button" class="btn btn-primary" (click)="create()">Save</button>
         </div>
       </form>
     </div>
