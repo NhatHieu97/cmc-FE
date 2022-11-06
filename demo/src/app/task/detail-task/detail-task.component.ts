@@ -24,9 +24,8 @@ export class DetailTaskComponent implements OnInit {
   checkEnd: boolean = false;
   project: any
   labelCreate = [];
-  parentLabel: Object = [];
+  parentLabel: Object=[];
   labelList: any;
-  projectName: any;
 
 
 
@@ -49,7 +48,7 @@ export class DetailTaskComponent implements OnInit {
       console.log(this.project);
       // this.formValue.patchValue(this.task);
       this.taskService.findListIdLabel(this.id).subscribe(data=> {
-        this.parentLabel = data;
+        this.parentLabel = data['data'];
         console.log(123)
         console.log(this.parentLabel)
       })
@@ -102,7 +101,7 @@ export class DetailTaskComponent implements OnInit {
           this.checkEnd = true;
         }
       }
-    );
+    )
   }
 
 

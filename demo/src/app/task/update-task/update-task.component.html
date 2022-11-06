@@ -9,23 +9,46 @@
             <input formControlName="name" class="form-control" type="text" placeholder="Name">
           </div>
           <div style="padding-top: 20px">
-            <input formControlName="date" class="form-control" type="text" placeholder="Date">
+            <input formControlName="date" class="form-control" type="date" placeholder="Date">
           </div>
           <div style="padding-top: 20px">
-            <input formControlName="end" class="form-control" type="text" placeholder="End">
+            <input formControlName="end" class="form-control" type="date" placeholder="End">
           </div>
           <div style="padding-top: 20px">
             <input formControlName="progress" class="form-control" type="text" placeholder="progress">
           </div>
           <div style="padding-top: 20px">
             <select
-              formControlName="project" class="form-control">
+              formControlName="projectId" class="form-control">
               <option disabled selected value="">Project</option>
-              <option *ngFor="let project of projectList" [ngValue]="project"
-                      [selected]="formValue.get('project').value.id == project.id">{{project.name}}
+              <option *ngFor="let projectDto of projectList" [ngValue]="projectDto.id"
+                      [selected]="project.id == projectDto.id">{{projectDto.name}}
               </option>
             </select>
           </div>
+
+          <div style="padding-top: 10px">
+
+            <br>
+            <ng-container *ngFor="let label of parentLabel">
+              <div class="d-flex justify-content-between">
+                <span>{{label?.name}}</span>
+                <span style="padding: 5px 50px">
+                  <i class="material-icons" style='color:red' (click)="deletelabel(label.name)">delete</i></span>
+              </div>
+            </ng-container>
+            <ng-container *ngFor="let label of labelCreate">
+              <div class="d-flex justify-content-between">
+                <span>{{label}}</span>
+                <span style="padding: 5px 50px">
+                  <i class="material-icons" style='color:red' (click)="deleteAfterAdd(label)">delete</i></span>
+              </div>
+            </ng-container>
+
+            <input #input type="text" placeholder="Input label to add" class="form-control label mr-2">
+            <a style="width: 100px; margin-top: 10px" class="form-control" (click)="addLabel(input)"> Add label</a>
+          </div>
+
           <br>
           <div class="text-center">
             <button type="button" class="btn btn-secondary" routerLink="">Close</button> &nbsp;

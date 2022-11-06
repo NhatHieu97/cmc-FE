@@ -29,7 +29,8 @@ export class ListTaskComponent implements OnInit {
   project : any;
   labelList: any;
   labelCreate = [];
-  labels: any
+  labels: any;
+  searchLabel = [];
 
   constructor(
     private taskService: TaskService,
@@ -58,16 +59,16 @@ export class ListTaskComponent implements OnInit {
     this.taskService.getAllProject().subscribe(data => {
       this.projectList = data['data']
     })
-    this.taskService.getAll().subscribe(data => {
+    this.taskService.getAllLabel().subscribe(data => {
+      this.labelList = data
+      console.log(123)
+      console.log(this.labelList)
+    })
+    this.taskService.getAll(null).subscribe(data => {
       this.taskList = data['data']
       console.log(this.taskList);
     })
-    this.taskService.getAllLabel().subscribe(data => {
-      this.labelList = data
-    })
-    // this.taskService.getByProjectId(this.taskList.projectId).subscribe(data => {
-    //   this.projectList = data['data']
-    // })
+
   }
 
   getById(id: number) {
@@ -77,11 +78,13 @@ export class ListTaskComponent implements OnInit {
 
     this.taskService.getById(id).subscribe(value => {
       this.taskSub = value['data']
+      console.log(this.taskSub)
       for (let i = 0; i < this.taskSub.length; i++){
-        if (this.taskSub[i].progress != 100){
+        if (this.taskSub[i].taskDTO.progress != 100){
           this.doingTask.push(this.taskSub[i])
         }else
           this.doneTask.push(this.taskSub[i])
+        console.log(this.doneTask)
       }
     })
   }
@@ -127,5 +130,21 @@ export class ListTaskComponent implements OnInit {
   addLabel(label: any){
     this.labelCreate.push(label.value)
     label.value = '';
+  }
+
+  searchByLabel() {
+    this.searchLabel= [];
+    var check = document.getElementsByClassName("check")
+    for (let i = 0; i < check.length; i++){
+      if (check[i].checked){
+        this.searchLabel.push(check[i].nextSibling.textContent)
+        console.log(check[i].nextSibling.textContent)
+
+      }
+    }
+    this.taskService.getAll(this.searchLabel).subscribe(value => {
+      this.taskList = value['data']
+      console.log(value)
+    })
   }
 }

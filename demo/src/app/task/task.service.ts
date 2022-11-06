@@ -20,8 +20,11 @@ export class TaskService {
     })
   };
 
-  getAll(){
-    return this.http.get(this.baseURL + "/task/listMain");
+  getAll(filter: any){
+    if(filter == null){
+      return this.http.post(this.baseURL + "/task/listMain/", null);
+    }else
+      return this.http.post(this.baseURL + "/task/listMain/" , filter);
   }
 
   getById(id: number) {
@@ -58,6 +61,6 @@ export class TaskService {
 
   findListIdLabel(id: number){
     console.log(id);
-    return this.http.get(this.baseURL + "/label/idLabel/" + id);
+    return this.http.get(this.baseURL + "/label/listLabel/" + id);
   }
 }

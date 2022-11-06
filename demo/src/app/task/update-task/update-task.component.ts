@@ -20,6 +20,11 @@ export class UpdateTaskComponent implements OnInit {
   taskName: String;
   progress: number;
   id: number;
+  labelCreate = [];
+  parentLabel: Object=[];
+  labelList: any;
+  project: any;
+  labelAfterDelete = [];
 
   constructor(
     private taskService: TaskService,
@@ -37,19 +42,34 @@ export class UpdateTaskComponent implements OnInit {
       date: [''],
       end: [''],
       progress: [''],
-      project: [''],
+      projectId: [''],
+      labels: [''],
     })
     this.taskService.getAllProject().subscribe(data => {
       this.projectList = data['data']
+      console.log("project")
+      console.log(this.projectList)
       this.id = this.activatedRoute.snapshot.params.id;
       this.taskService.finById(this.id).subscribe(value => {
         this.task = value['data'];
-        this.formValue.patchValue(this.task);
+        console.log(this.task)
+        this.project = this.task.project
+        this.taskService.findListIdLabel(this.id).subscribe(data=> {
+          this.parentLabel = data['data'];
+          console.log(123)
+          console.log(this.parentLabel)
+          this.formValue.patchValue(this.task.task)
+          // this.formValue.get('projectId').setValue(this.project)
+          console.log(this.formValue.value)
+        })
       })
     })
   }
 
   update() {
+    console.log(this.formValue.value)
+    this.changeLabel();
+    this.formValue.get('labels').setValue(this.labelCreate);
     console.log(this.formValue.value)
     if (this.formValue.invalid) {
       alert('There was an error!');
@@ -62,5 +82,37 @@ export class UpdateTaskComponent implements OnInit {
       );
     }
 
+  }
+
+  addLabel(label : any){
+    this.labelCreate.push(label.value);
+    label.value = '';
+  }
+
+  deletelabel(label: any) {
+    this.labelAfterDelete = [];
+    for (let i = 0; i < this.parentLabel.length; i++){
+      if (this.parentLabel[i].name != label){
+        this.labelAfterDelete.push(this.parentLabel[i])
+      }
+    }
+    this.parentLabel = this.labelAfterDelete;
+  }
+
+  deleteAfterAdd(label: any) {
+    this.labelAfterDelete = [];
+    for (let i = 0; i < this.labelCreate.length; i++){
+      if (this.labelCreate[i] != label){
+        this.labelAfterDelete.push(this.labelCreate[i])
+      }
+    }
+    this.labelCreate = this.labelAfterDelete;
+    console.log(this.parentLabel)
+  }
+
+  changeLabel(){
+    for(let i = 0; i < this.parentLabel.length; i++){
+      this.labelCreate.push(this.parentLabel[i].name)
+    }
   }
 }
