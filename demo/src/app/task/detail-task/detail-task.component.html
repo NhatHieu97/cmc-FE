@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+      <h2 align="center">Detail Task</h2>
+      <a data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-bottom: 10px" class="btn btn-primary"
+         href="#">Create new SubTask</a>
+      <form [formGroup]="formValue">
+      <div class="task">
+        <div>
+          <input formControlName="name" class="form-control" type="text" placeholder="Name">
+        </div>
+        <div style="padding-top: 20px">
+          <input formControlName="date" class="form-control" type="text" placeholder="Date">
+        </div>
+        <div style="padding-top: 20px">
+          <input formControlName="end" class="form-control" type="text" placeholder="End">
+        </div>
+        <div style="padding-top: 20px">
+          <input formControlName="progress" class="form-control" type="text" placeholder="progress">
+        </div>
+        <div style="padding-top: 20px">
+          <div formControlName="project"
+               class="form-control"  readonly>{{task.project.name}}</div>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="subTask">
+        <div class="modal-body">
+          <div class="card-body height">
+            <div class="task">
+              <div style="padding-top: 10px">
+                <input formControlName="name" class="form-control" type="text" placeholder="Name">
+              </div>
+              <div style="padding-top: 10px">
+                <input formControlName="date" class="form-control" type="text" placeholder="Date">
+              </div>
+              <div style="padding-top: 10px">
+                <input formControlName="end" class="form-control" type="text" placeholder="End">
+              </div>
+              <div style="padding-top: 10px">
+                <input  formControlName="progress" class="form-control" type="text" placeholder="progress">
+              </div>
+              <div style="padding-top: 10px">
+                <input  value="{{projectName.name}}" class="form-control" type="text" >
+              </div>
+              <div>
+                <input #input type="text" placeholder="input label to add" class="label" class="mr-2">
+                <button (click)="addLabel(input)"> Add label</button>
+                <br>
+                <ng-container *ngFor="let label of parentLabel">
+                  <span>{{label.name}}</span><br>
+                </ng-container>
+                <div *ngFor="let label of labelCreate">
+                  {{label}}
+                </div>
+<!--                <div>-->
+<!--                  <div for>-->
+<!--                    <input  type="text"> <span>X</span>-->
+<!--                  </div>-->
+<!--                  <INPUT>-->
+<!--                  <ADD></ADD>-->
+<!--                </div>-->
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="create()">Save</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
